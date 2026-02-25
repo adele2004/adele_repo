@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+<https://hub.2i2c.mybinder.org/user/adele2004-adele_repo-y7xz24qv/lab>
+
 ## Quarto
 
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
