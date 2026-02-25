@@ -1,0 +1,116 @@
+---
+title: "SeaUrchinData"
+format: html
+editor: visual
+---
+
+## Running Code
+
+When you click the **Render** button a document will be generated
+
+## Tidyverse For Clean Data
+
+Install and get tidyverse package
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+# Adéle Venter, VNTADE002
+# Load required packages
+library(readxl)
+
+# Read the data
+urchin_data <- read_excel("data/gonad quality_Cape urchin.xlsx")
+
+# Wrangle the data
+urchin_clean <- urchin_data %>%
+  
+  
+  # Ensure correct data types for all variables
+  mutate(
+    # Text variables as factors
+    diet = as.factor(diet),
+    temperature = as.factor(temperature),
+    treatment = as.factor(treatment),
+    animal_colour = as.factor(animal_colour),
+    sex = as.factor(sex),
+    
+    # Numerical variables as numeric
+    week = as.numeric(week),
+    animal_weight = as.numeric(animal_weight),
+    gonad_weight = as.numeric(gonad_weight),
+    GSI = as.numeric(GSI),
+    L_star = as.numeric(`L*`),  # Note the backticks for special characters
+    a_star = as.numeric(`a*`),
+    b_star = as.numeric(`b*`)
+  ) %>%
+  
+  # Remove animal_colour variable
+  select(-animal_colour) %>%
+  
+  # Arrange the data in a logical order
+  arrange(diet, temperature, treatment, week, sex) %>%
+  
+  # Select and reorder columns for better readability
+  select(
+    # Identifiers first
+    diet, temperature, treatment, sex,
+    # Measurements next
+    animal_weight, gonad_weight, GSI,
+    # Color values
+    L_star, a_star, b_star,
+  )
+
+# View the cleaned data structure
+glimpse(urchin_clean)
+
+# Check for any NA values
+summary(urchin_clean)
+
+# If you need the data in LONG format for certain analyses:
+urchin_long <- urchin_clean %>%
+  pivot_longer(
+    cols = c(animal_weight, gonad_weight, GSI, L_star, a_star, b_star),
+    names_to = "variable",
+    values_to = "value"
+  )
+
+# View the long format
+head(urchin_long)
+
+# Boxplot of gonad weight by diet and temperature
+ggplot(urchin_clean, aes(x = diet, y = gonad_weight, fill = temperature)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Gonad Weight by Diet and Temperature",
+       x = "Diet", y = "Gonad Weight (g)")
+
+# Multiple boxplots for key variables
+library(patchwork)
+
+p1 <- ggplot(urchin_clean, aes(x = diet, y = GSI, fill = diet)) +
+  geom_boxplot() + theme_minimal() + labs(title = "GSI by Diet") +
+  theme(legend.position = "none")
+
+p2 <- ggplot(urchin_clean, aes(x = temperature, y = GSI, fill = temperature)) +
+  geom_boxplot() + theme_minimal() + labs(title = "GSI by Temperature") +
+  theme(legend.position = "none")
+
+p3 <- ggplot(urchin_clean, aes(x = sex, y = GSI, fill = sex)) +
+  geom_boxplot() + theme_minimal() + labs(title = "GSI by Sex") +
+  theme(legend.position = "none")
+
+p4 <- ggplot(urchin_clean, aes(x = treatment, y = GSI, fill = treatment)) +
+  geom_boxplot() + theme_minimal() + labs(title = "GSI by Treatment") +
+  theme(legend.position = "none")
+
+# Combine all plots
+(p1 | p2) / (p3 | p4) +
+  plot_annotation(title = "Summary Boxplots of GSI by Different Factors")
+
+# To save the cleaned data
+write_csv(urchin_clean, "data/urchin_clean.csv")
+write_csv(urchin_long, "data/urchin_long.csv")
+```
