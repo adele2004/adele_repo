@@ -6,7 +6,7 @@ code-link: true
 ---
 
 ```         
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adele2004/adele_repo/HEAD)
+https://hub.2i2c.mybinder.org/user/adele2004-adele_repo-la4vff7i/lab 
 ```
 
 ## Quarto
