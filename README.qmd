@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-<https://hub.2i2c.mybinder.org/user/adele2004-adele_repo-y7xz24qv/lab>
+\[\![Binder\](https://mybinder.org/badge_logo.svg)\](https://mybinder.org/v2/gh/adele2004/adele_repo/HEAD)
 
 ## Quarto
 
