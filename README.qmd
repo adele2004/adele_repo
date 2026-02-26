@@ -2,9 +2,12 @@
 title: "Cape Sea Urchin Disease Study"
 format: html
 editor: visual
+code-link: true
 ---
 
-\[\![Binder\](https://mybinder.org/badge_logo.svg)\](https://mybinder.org/v2/gh/adele2004/adele_repo/HEAD)
+```         
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adele2004/adele_repo/HEAD)
+```
 
 ## Quarto
 
